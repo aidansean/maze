@@ -1,0 +1,53 @@
+h2#h2_room_name{
+  width  : 377px ;
+}
+canvas#editarea{
+  width : 375px ;
+  margin : auto ;
+  border : 1px solid black ;
+}
+canvas#canvas_N, canvas#canvas_S{
+  width : 375px ;
+  height : 25px ;
+}
+canvas#canvas_W, canvas#canvas_E{
+  width : 25px ;
+  height : 375px ;
+}
+canvas.thumbnail{
+  width : 25px ;
+  height : 25px ;
+}
+h2#h2_room_name{
+  margin-top : 20px ;
+  margin-bottom : 5px ;
+  color : white ;
+  padding-top : 0.5em ;
+  padding-bottom : 0.5em ;
+  background-color : black ;
+  font-family : arial , sans-serif ;
+  font-style : normal ;
+}
+table{
+  margin-top : 20px ;
+}
+td#compass_N, td#compass_E, td#compass_S, td#compass_W{
+  background-color : red ;
+  color : white ;
+  text-align : center ;
+  font-size : 20px ;
+  border : 2px solid red ;
+}
+td#compass_N:hover, td#compass_E:hover, td#compass_S:hover, td#compass_W:hover{
+  background-color : white ;
+  color : red ;
+}
+td#compass_E, td#compass_W{
+  width : 30px ;
+}
+td#compass_E, td#compass_W{
+  height : 30px ;
+}
+td#td_tb{
+  width : 400px ;
+}

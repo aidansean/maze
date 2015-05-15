@@ -1,0 +1,69 @@
+h2#h2_room_name{
+  width  : 502px ;
+}
+canvas#playarea{
+  width  : 500px ;
+  height : 500px ;
+  margin : auto ;
+  border : 1px solid black ;
+}
+h2#h2_room_name{
+  margin-top : 20px ;
+  margin-bottom : 5px ;
+  color : white ;
+  padding-top : 0.5em ;
+  padding-bottom : 0.5em ;
+  background-color : black ;
+  font-family : arial , sans-serif ;
+  font-style : normal ;
+}
+div#div_dialogue{
+  background-color : white ;
+  color : black ;
+  width : 472px ;
+  height : 100px ;
+  font : 20px courier , monospace ;
+  border : 5px solid black ;
+  padding : 10px ;
+  text-align : left ;
+}
+span#span_dialogue_visible{
+  color : black ;
+}
+span#span_dialogue_invisible{
+  color : white ;
+}
+div#game_wrapper{
+  display : table ;
+}
+div#playarea_wrapper{
+  width : 510px ;
+  display : table-cell ;
+}
+div#stats_wrapper{
+  display : table-cell ;
+}
+table#table_combat{
+  width : 250px ;
+  border : 2px solid black ;
+  background-color : white ;
+}
+th.combat_category_inactive, th.combat_cell_inactive, td.combat_cell_inactive{
+  color : white ;
+  background-color : white ;
+}
+th.combat_category{
+  width : 50px ;
+  text-align : right ;
+  color : white ;
+  background-color : black ;
+  padding-right : 5px ;
+}
+th.combat_cell, td.combat_cell{
+  width : 100px ;
+  border : 0px solid red ;
+  text-align : left ;
+}
+th.combat_category, th.combat_cell, td.combat_cell, th.combat_category_inactive, th.combat_cell_inactive, td.combat_cell_inactive{
+  font : 12pt arial ;
+}
