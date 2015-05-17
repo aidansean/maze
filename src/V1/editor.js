@@ -47,6 +47,24 @@ function map_mouseDown(evt){
     j_mouse_1 = Math.floor(XY[1]/(scale*cellSize)) ;
     for(var i=0 ; i<copy_cells.length ; i++){
       for(var j=0 ; j<copy_cells[i].length ; j++){
+        // Check to see if we're removing any pressure pads or levers
+        var m = master_map[player.B][player.A].cells[j_mouse_1+j][i_mouse_1+i] ;
+        if(m>=1000 && m<2000){
+          var p = pad_and_door_objects[m%1000] ;
+          master_map[p.B2][p.A2].cells[p.j2][p.i2] = 0 ;
+        }
+        if(m>=2000 && m<3000){
+          var p = pad_and_door_objects[m%1000] ;
+          master_map[p.B1][p.A1].cells[p.j1][p.i1] = 0 ;
+        }
+        if(m>=3000 && m<4000){
+          var p = pad_and_door_objects[m%1000] ;
+          master_map[p.B2][p.A2].cells[p.j2][p.i2] = 0 ;
+        }
+        if(m>=4000 && m<5000){
+          var p = pad_and_door_objects[m%1000] ;
+          master_map[p.B1][p.A1].cells[p.j1][p.i1] = 0 ;
+        }
         master_map[player.B][player.A].cells[j_mouse_1+j][i_mouse_1+i] = copy_cells[i][j] ;
         cells[j_mouse_1+j][i_mouse_1+i] = copy_cells[i][j] ;
       }
@@ -55,6 +73,72 @@ function map_mouseDown(evt){
     write_map() ;
     return ;
   }
+  else if(pad_door_flag==1){
+    // Place the pad for a door
+    var XY = XY_from_mouse(evt) ;
+    i_mouse_1 = Math.floor(XY[0]/(scale*cellSize)) ;
+    j_mouse_1 = Math.floor(XY[1]/(scale*cellSize)) ;
+    pad_A = player.A ;
+    pad_B = player.B ;
+    pad_i = i_mouse_1 ;
+    pad_j = j_mouse_1 ;
+    pad_door_flag = 2 ;
+  }
+  else if(pad_door_flag==2){
+    // Place the pad for a door
+    var XY = XY_from_mouse(evt) ;
+    i_mouse_1 = Math.floor(XY[0]/(scale*cellSize)) ;
+    j_mouse_1 = Math.floor(XY[1]/(scale*cellSize)) ;
+    if(i_mouse_1==pad_i && j_mouse_1==pad_j) return ;
+    door_A = player.A ;
+    door_B = player.B ;
+    door_i = i_mouse_1 ;
+    door_j = j_mouse_1 ;
+    pad_door_flag = 2 ;
+    var index = pad_and_door_objects.length ;
+    pad_and_door_objects.push(new pad_and_door(pad_A,pad_B,pad_i,pad_j,door_A,door_B,door_i,door_j,next_pad_letter(),true) ) ;
+    master_map[ pad_B][ pad_A].cells[ pad_j][ pad_i] = 1000+index ;
+    master_map[door_B][door_A].cells[door_j][door_i] = 2000+index ;
+    cells[door_j][door_i] = 2000+index ;
+    if(pad_A==player.A && pad_B==player.B) cells[pad_j][pad_i] = 1000+index ;
+    draw_all() ;
+    write_map() ;
+    pad_door_flag = 3 ;
+  }
+  else if(lever_door_flag==1){
+    // Place the pad for a door
+    var XY = XY_from_mouse(evt) ;
+    i_mouse_1 = Math.floor(XY[0]/(scale*cellSize)) ;
+    j_mouse_1 = Math.floor(XY[1]/(scale*cellSize)) ;
+    lever_A = player.A ;
+    lever_B = player.B ;
+    lever_i = i_mouse_1 ;
+    lever_j = j_mouse_1 ;
+    lever_door_flag = 2 ;
+  }
+  else if(lever_door_flag==2){
+    // Place the pad for a door
+    var XY = XY_from_mouse(evt) ;
+    i_mouse_1 = Math.floor(XY[0]/(scale*cellSize)) ;
+    j_mouse_1 = Math.floor(XY[1]/(scale*cellSize)) ;
+    if(i_mouse_1==lever_i && j_mouse_1==lever_j) return ;
+    door_A = player.A ;
+    door_B = player.B ;
+    door_i = i_mouse_1 ;
+    door_j = j_mouse_1 ;
+    
+    lever_door_flag = 2 ;
+    var index = lever_and_door_objects.length ;
+    lever_and_door_objects.push(new lever_and_door(lever_A,lever_B,lever_i,lever_j, door_A,door_B,door_i,door_j,next_lever_letter(),lever_dir) ) ;
+    alert(lever_B+','+lever_A+' '+lever_j+','+lever_i+' '+lever_dir+' '+lever_and_door_objects.length) ;
+    master_map[lever_B][lever_A].cells[lever_j][lever_i] = 3000+index ;
+    master_map[ door_B][ door_A].cells[ door_j][ door_i] = 4000+index ;
+    cells[door_j][door_i] = 4000+index ;
+    if(pad_A==player.A && pad_B==player.B) cells[lever_j][lever_i] = 3000+index ;
+    draw_all() ;
+    write_map() ;
+    lever_door_flag = 3 ;
+  }
   else{
     var XY = XY_from_mouse(evt) ;
     i_mouse_1 = Math.floor(XY[0]/(scale*cellSize)) ;
@@ -62,7 +146,31 @@ function map_mouseDown(evt){
     return ;
   }
 }
+
+function   update_pad_door_flag()  {   pad_door_flag = 1 ; lever_door_flag = 0 ; }
+function    reset_pad_door_flag()  {   pad_door_flag = 0 ; lever_door_flag = 0 ; }
+function update_lever_door_flag_N(){ lever_door_flag = 1 ;   pad_door_flag = 0 ; lever_dir = 'N' ; }
+function update_lever_door_flag_E(){ lever_door_flag = 1 ;   pad_door_flag = 0 ; lever_dir = 'E' ; }
+function update_lever_door_flag_S(){ lever_door_flag = 1 ;   pad_door_flag = 0 ; lever_dir = 'S' ; }
+function update_lever_door_flag_W(){ lever_door_flag = 1 ;   pad_door_flag = 0 ; lever_dir = 'W' ; }
+function  reset_lever_door_flag()  { lever_door_flag = 0 ;   pad_door_flag = 0 ; }
+
+function   next_pad_letter(){ return String.fromCharCode(  pad_and_door_objects.length+65) ; }
+function next_lever_letter(){ return String.fromCharCode(lever_and_door_objects.length+97) ; }
+
 function map_mouseUp(evt){
+  if(pad_door_flag!=0){ 
+    if(pad_door_flag==3) pad_door_flag = 0 ; 
+    return ;
+  }
+  if(lever_door_flag!=0){ 
+    if(lever_door_flag==3) lever_door_flag = 0 ; 
+    return ;
+  }
+  if(copy_cells!=0){
+    copy_cells = 0 ;
+    return ;
+  }
   // Work out where the user has clicked
   var XY = XY_from_mouse(evt) ;
   
@@ -89,17 +197,28 @@ function map_mouseUp(evt){
   else{ // Normal assignment of cells
     for(var i=i1 ; i<=i2 ; i++){
       for(var j=j1 ; j<=j2 ; j++){
-        if(paintbrush_type=='contents'){
-          master_map[player.B][player.A].cell_contents[j][i] = paintbrush ;
+        var m = master_map[player.B][player.A].cells[j][i] ;
+        // Check to see if we're removing any pressure pads or levers
+        if(m>=1000 && m<2000){
+          var p = pad_and_door_objects[m%1000] ;
+          master_map[p.B2][p.A2].cells[p.j2][p.i2] = 0 ;
         }
-        else{
-          master_map[player.B][player.A].cells[j][i] = paintbrush ;
-          cells[j][i] = paintbrush ;
+        if(m>=2000 && m<3000){
+          var p = pad_and_door_objects[m%1000] ;
+          master_map[p.B1][p.A1].cells[p.j1][p.i1] = 0 ;
         }
+        if(m>=3000 && m<4000){
+          var p = pad_and_door_objects[m%1000] ;
+          master_map[p.B2][p.A2].cells[p.j2][p.i2] = 0 ;
+        }
+        if(m>=4000 && m<5000){
+          var p = pad_and_door_objects[m%1000] ;
+          master_map[p.B1][p.A1].cells[p.j1][p.i1] = 0 ;
+        }
+        master_map[player.B][player.A].cells[j][i] = paintbrush ;
+        cells[j][i] = paintbrush ;
       }
     }
-    populate_rooms() ;
-    //change_room(player.A,player.B) ;
     draw_all() ;
     write_map() ;
    return ;
@@ -119,6 +238,12 @@ function write_map(){
     if(B<master_map.length-1) str.push('   ,') ;
   }
   str.push('] ;') ;
+  for(var i=0 ; i<pad_and_door_objects.length ; i++){
+    str.push(pad_and_door_objects[i].write_output()) ;
+  } 
+  for(var i=0 ; i<lever_and_door_objects.length ; i++){
+    str.push(lever_and_door_objects[i].write_output()) ;
+  } 
   str = str.join('\n') ;
   document.getElementById('textarea_mastermap').value = str ;
 }
@@ -271,33 +396,21 @@ function update_surrounding_rooms(){
 
 function setup_thumbnails(){
   make_thumbnail('thumbnail_1_wall'   ) ;
-  make_thumbnail('thumbnail_16_stone' ) ;
   make_thumbnail('thumbnail_90_sea'   ) ;
-  make_thumbnail('thumbnail_91_fence' ) ;
   make_thumbnail('thumbnail_0_floor'  ) ;
   make_thumbnail('thumbnail_11_grass' ) ;
   make_thumbnail('thumbnail_12_sand'  ) ;
-  make_thumbnail('thumbnail_13_wood'  ) ;
   make_thumbnail('thumbnail_40_tilebw') ;
   make_thumbnail('thumbnail_41_tileBB') ;
-  make_thumbnail('thumbnail_14_pave'  ) ;
-  make_thumbnail('thumbnail_15_gravel') ;
-  make_thumbnail('thumbnail_50_stepsH') ;
-  make_thumbnail('thumbnail_51_stepsV') ;
-  
-  make_thing_thumbnail('thumbnail_61_appleTree') ;
-  make_thing_thumbnail('thumbnail_62_tree') ;
   
   make_thumbnail('thumbnail_30_travN') ;
   make_thumbnail('thumbnail_31_travE') ;
   make_thumbnail('thumbnail_32_travS') ;
   make_thumbnail('thumbnail_33_travW') ;
-  make_thing_thumbnail('thumbnail_2_pb'    ) ;
-  make_thing_thumbnail('thumbnail_21_gp1'  ) ;
-  make_thing_thumbnail('thumbnail_22_gp2'  ) ;
-  make_thing_thumbnail('thumbnail_23_gp5'  ) ;
-  make_thing_thumbnail('thumbnail_101_bedRed') ;
-  make_thing_thumbnail('thumbnail_103_bedBlue') ;
+  make_thumbnail('thumbnail_2_pb'    ) ;
+  make_thumbnail('thumbnail_21_gp1'  ) ;
+  make_thumbnail('thumbnail_22_gp2'  ) ;
+  make_thumbnail('thumbnail_23_gp5'  ) ;
   
   make_floortype_thumbnail('thumbnail_floortype_0_floor'  ) ;
   make_floortype_thumbnail('thumbnail_floortype_11_grass' ) ;
@@ -312,14 +425,6 @@ function make_thumbnail(id, thing){
   var context_tb = canvas_tb.getContext('2d') ;
   thing.draw(context_tb,0,0,true) ;
   canvas_tb.addEventListener('click',change_paintbrush) ;
-}
-function make_thing_thumbnail(id, thing){
-  var index = parseInt(id.split('_')[1]) ;
-  if(undefined==thing) thing = get_thing(index) ;
-  var  canvas_tb = document.getElementById(id) ;
-  var context_tb = canvas_tb.getContext('2d') ;
-  thing.draw(context_tb,0,0,true) ;
-  canvas_tb.addEventListener('click',change_thing_paintbrush) ;
 }
 function make_floortype_thumbnail(id, thing){
   var index = parseInt(id.split('_')[2]) ;
@@ -343,12 +448,10 @@ function change_floortype(evt){
   context_floortype.fillStyle = 'rgb(255,255,255)' ;
   context_floortype.fillRect(0,0,50,50) ;
   thing.draw(context_floortype,0,0) ;
-  draw_all() ;
   write_map() ;
 }
 
-function change_paintbrush(evt, contents){
-  paintbrush_type = (contents) ? 'contents' : 'cells' ;
+function change_paintbrush(evt){
   var target ;
   if (!evt) var evt = window.event ;
   if(evt.target) target = evt.target ;
@@ -362,36 +465,4 @@ function change_paintbrush(evt, contents){
   context_paintbrush.fillRect(0,0,50,50) ;
   thing.draw(context_paintbrush,0,0) ;
   write_map() ;
-}
-function change_thing_paintbrush(evt){
-  change_paintbrush(evt, true) ;
-}
-
-
-
-function start(){
-  document.addEventListener('keydown', keyDown) ;
-  document.getElementById('editarea' ).addEventListener("mousedown", map_mouseDown) ;
-  document.getElementById('editarea' ).addEventListener("mouseup"  , map_mouseUp  ) ;
-  document.getElementById('editarea' ).oncontextmenu = function() { return false } ;
-  document.getElementById('compass_N').addEventListener("click", compass_move_N) ;
-  document.getElementById('compass_E').addEventListener("click", compass_move_E) ;
-  document.getElementById('compass_S').addEventListener("click", compass_move_S) ;
-  document.getElementById('compass_W').addEventListener("click", compass_move_W) ;
-  document.getElementById('input_room_name').addEventListener("change", update_room_name) ;
-  document.getElementById('input_wallFillColor').addEventListener("change", update_wallFillColor) ;
-  document.getElementById('input_wallEdgeColor').addEventListener("change", update_wallEdgeColor) ;
-
-  canvas = document.getElementById('editarea') ;
-  context = canvas.getContext('2d') ;
-  player = new player_object() ;
-  player.set_coords(p_A,p_B,p_i,p_j) ;
-  player.update_map() ;
-  player.ghost_mode = true ;
-  change_room(p_A,p_B) ;
-  setup_thumbnails() ;
-  draw_all() ;
-}
-function update_all(){
-  document.getElementById('td_gold').innerHTML = player.gp ;
 }

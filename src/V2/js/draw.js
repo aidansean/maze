@@ -2,7 +2,7 @@ function draw_all(){
   Math.seed = 6 ;
   context.fillStyle = 'rgb(255,255,255)' ;
   context.fillRect(0,0,w,h) ;
-  draw_grid() ;
+  //draw_grid() ;
   draw_all_cells() ;
   draw_cell_contents() ;
   draw_room_name() ;
