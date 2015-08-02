@@ -1,4 +1,4 @@
-Following on from the <a href="">Platform game</a> and <a href="">Explorer game</a> I wanted to create a tile based game.  This was partly inspired by the game <a href="http://www.roguetemple.com/2008/05/01/indev-kharne/">Kharne</a> which I had played many times, and I became frustrated with the lack of similar games online.  (It was this frustration that lead to a minro obsession with <a href="http://startcontinue.com/91/">91</a>, and the creation of the huge <a href="http://aidansean.com/projects/?p=490">91 map poster</a>.)
+Following on from the <a href="http://aidansean.com/projects/?tag=platform-game">Platform game</a> and <a href="http://aidansean.com/projects/?tag=explorer-game">Explorer game</a> I wanted to create a tile based game.  This was partly inspired by the game <a href="http://www.roguetemple.com/2008/05/01/indev-kharne/">Kharne</a> which I had played many times, and I became frustrated with the lack of similar games online.  (It was this frustration that lead to a minor obsession with <a href="http://startcontinue.com/91/">91</a>, and the creation of the huge <a href="http://aidansean.com/projects/?p=490">91 map poster</a>.)
 
 <h3>Links</h3>
 

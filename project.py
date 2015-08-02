@@ -3,12 +3,15 @@ from project_module import project_object, image_object, link_object, challenge_
 p = project_object('maze', 'Maze - Island Quest')
 p.domain = 'http://www.aidansean.com/'
 p.path = 'maze'
-p.preview_image_ = image_object('http://placekitten.com.s3.amazonaws.com/homepage-samples/408/287.jpg', 408, 287)
+p.preview_image    = image_object('%s/images/project.jpg'   %p.path, 150, 250)
+p.preview_image_bw = image_object('%s/images/project_bw.jpg'%p.path, 150, 250)
 p.folder_name = 'aidansean'
 p.github_repo_name = 'maze'
 p.mathjax = False
+p.tags = 'Games'
+p.technologies = 'canvas,CSS,HTML,JavaScript'
 p.links.append(link_object(p.domain, 'maze', 'Live page'))
-p.introduction = 'Following on from the <a href="">Platform game</a> and <a href="">Explorer game</a> I wanted to create a tile based game.  This was partly inspired by the game <a href="http://www.roguetemple.com/2008/05/01/indev-kharne/">Kharne</a> which I had played many times, and I became frustrated with the lack of similar games online.  (It was this frustration that lead to a minro obsession with <a href="http://startcontinue.com/91/">91</a>, and the creation of the huge <a href="http://aidansean.com/projects/?p=490">91 map poster</a>.)'
+p.introduction = 'Following on from the <a href="http://aidansean.com/projects/?tag=platform-game">Platform game</a> and <a href="http://aidansean.com/projects/?tag=explorer-game">Explorer game</a> I wanted to create a tile based game.  This was partly inspired by the game <a href="http://www.roguetemple.com/2008/05/01/indev-kharne/">Kharne</a> which I had played many times, and I became frustrated with the lack of similar games online.  (It was this frustration that lead to a minor obsession with <a href="http://startcontinue.com/91/">91</a>, and the creation of the huge <a href="http://aidansean.com/projects/?p=490">91 map poster</a>.)'
 p.overview = '''This game builds on the experience I gained from the Platform game, Explorer game and others.  The player finds themself on an island where they must pursue several adventures.  All of the graphics are procedurally generated and the emphasis is placed on making each adventure unique and special, rather than "Collect 100 coins" or "Beat this boss".  Like the other similar game projects the progress has been postponed here, as other projects are considered more important.'''
 
 p.challenges.append(challenge_object('This game needed dialgoue trees and combat.', 'I wanted to make a game with some standaard dialogue and combat functionality for NPCs.  The dialogue tree to a while to work out, mostly because there\'s no clean way to do it, but I\'m quite happy with the outcome.  The combat was easier to manage, but it will take some iteration before it becomes optmised.', 'Resolved'))

@@ -1,4 +1,6 @@
 <?php
+include_once($_SERVER['FILE_PREFIX']."/project_list/project_object.php") ;
 $github_uri   = "https://github.com/aidansean/maze" ;
 $blogpost_uri = "http://aidansean.com/projects/?tag=maze" ;
+$project = new project_object("maze", "Maze - Island Quest", "https://github.com/aidansean/maze", "http://aidansean.com/projects/?tag=maze", "maze/images/project.jpg", "maze/images/project_bw.jpg", "Following on from the <a href=\"http://aidansean.com/projects/?tag=platform-game\">Platform game</a> and <a href=\"http://aidansean.com/projects/?tag=explorer-game\">Explorer game</a> I wanted to create a tile based game.  This was partly inspired by the game <a href=\"http://www.roguetemple.com/2008/05/01/indev-kharne/\">Kharne</a> which I had played many times, and I became frustrated with the lack of similar games online.  (It was this frustration that lead to a minor obsession with <a href=\"http://startcontinue.com/91/\">91</a>, and the creation of the huge <a href=\"http://aidansean.com/projects/?p=490\">91 map poster</a>.)", "Games", "canvas,CSS,HTML,JavaScript") ;
 ?>
